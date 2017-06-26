@@ -21,15 +21,17 @@ endif()
 
 #Add sources.
 set(CPU_HEADERS
-  CPU/meanfield_cpu.h
+  hash_table.hpp
+  modified_permutohedral.hpp
 )
 
 set(CPU_SOURCES
-  CPU/meanfield_cpu.cpp
+  modified_permutohedral.cpp
 )
 
 set(CUDA_SOURCES
-  CUDA/meanfield_cuda.h
+  modified_permutohedral.cu
+  hash_helper.cu
 )
 
 #Add source groups for VS2015.
