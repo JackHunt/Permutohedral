@@ -1,6 +1,10 @@
 #ifndef PERMUTOHEDRAL_HASH_TABLE_HPP
 #define PERMUTOHEDRAL_HASH_TABLE_HPP
 
+#ifndef CPU_ONLY
+#include "cuda_check.h"
+#endif
+
 namespace Permutohedral {
 
 class HashTable
@@ -58,4 +62,4 @@ class HashTable
 
 };
 }//namespace caffe
-#endif //CAFFE_HASH_TABLE_HPP
+#endif //PERMUTOHEDRAL_HASH_TABLE_HPP

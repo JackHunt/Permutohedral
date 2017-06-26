@@ -31,6 +31,10 @@ set(CPU_SOURCES
   modified_permutohedral.cpp
 )
 
+set(CUDA_HEADERS
+  cuda_check.h
+)
+
 set(CUDA_SOURCES
   modified_permutohedral.cu
   hash_helper.cu
@@ -38,11 +42,11 @@ set(CUDA_SOURCES
 
 #Add source groups for VS2015.
 source_group(CPU FILES ${CPU_HEADERS} ${CPU_SOURCES})
-source_group(CUDA FILES ${CUDA_SOURCES})
+source_group(CUDA FILES ${CUDA_HEADERS} ${CUDA_SOURCES})
 
 #Add library.
 if(WITH_CUDA)
-  cuda_add_library(Permutohedral ${CUDA_SOURCES} ${CPU_HEADERS} ${CPU_SOURCES})
+  cuda_add_library(Permutohedral ${CUDA_HEADERS} ${CUDA_SOURCES} ${CPU_HEADERS} ${CPU_SOURCES})
 else()
   add_library(Permutohedral ${CPU_HEADERS} ${CPU_SOURCES})
 endif()

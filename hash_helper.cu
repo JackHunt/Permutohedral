@@ -1,8 +1,6 @@
-#include "caffe/common.hpp"
-
 #define modHash(n) ((n)%(2*table_capacity));
 
-namespace caffe {
+namespace Permutohedral {
 
 template<int kd> 
 __device__ __host__ static unsigned int hash(signed short *key) {
@@ -100,4 +98,4 @@ __device__ static int hashTableRetrieve(signed short *key,
   }
 }
 
-} //namespace caffe
+} //namespace Permutohedral

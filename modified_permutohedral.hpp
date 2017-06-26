@@ -9,6 +9,10 @@
 #include <cmath>
 #include "hash_table.hpp"
 
+#ifndef CPU_ONLY
+#include "cuda_check.h"
+#endif
+
 /************************************************/
 /***          ModifiedPermutohedral Lattice   ***/
 /************************************************/

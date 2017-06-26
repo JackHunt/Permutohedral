@@ -9,7 +9,7 @@ namespace Permutohedral {
 
 template<typename T>
 __global__
-void memsetKernel(int n, T *arr, T val) {
+void memsetKernel(int n, *T arr, T val) {
 	int idx = blockIdx.x * blockDim.x + threadIdx.x;
 	if (idx >= n) {
 		return;
@@ -426,10 +426,10 @@ void gpu_compute(Dtype* out, const Dtype* in, const HashTable &table,
   int num_points = w*h ;
   float *table_values ;
   CUDA_CHECK(cudaMalloc((void**)&table_values, sizeof(float)*(vd+1)*num_points*(pd+1))) ;
-  int len = num_points*(vd + 1)*(pd + 1);
+  //caffe_gpu_set<float>(num_points*(vd+1)*(pd+1), 0, table_values) ;
   dim3 blockDim(512);
-  dim3 gridDim(static_cast<int>(ceil(static_cast<float>(len) / static_cast<float>(blockDim.x))));
-  memsetKernel<float><<<gridDim, blockDim>>>(len, table_values, 0.0);
+  dim3 gridDim(static_cast<int>(ceil(static_cast<float>() / static_cast<float>())));
+  memsetKernel<float>(num_points*(vd + 1)*(pd + 1), table_values, 0.0);
 
   dim3 blocks((w-1)/8+1, (h-1)/8+1, 1);
   dim3 blockSize(8, 8, 1);
@@ -450,7 +450,7 @@ void gpu_compute(Dtype* out, const Dtype* in, const HashTable &table,
   size_t size =  num_points*(pd+1)*(vd+1)*sizeof(float);
   CUDA_CHECK(cudaMalloc((void**)&(newValues), size));
   CUDA_CHECK(cudaMalloc((void**)&(oldValues), size));
-  memsetKernel<float> << <gridDim, blockDim >> >(len, newValues, 0.0);
+  caffe_gpu_set<float>(num_points*(vd+1)*(pd+1), 0, newValues) ;
   for (int color = reverse?pd:0; color <= pd && color>=0; reverse?color--:color++) {
     blur<pd><<<cleanBlocks, cleanBlockSize>>>(num_points*(pd+1), newValues,
      matrix,
