@@ -1,5 +1,5 @@
 //#include "stdafx.h"
-#include "caffe/util/modified_permutohedral.hpp"
+#include "modified_permutohedral.hpp"
 
 #ifdef __SSE__
 // SSE Permutoheral lattice
