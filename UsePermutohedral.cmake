@@ -1,0 +1,10 @@
+FIND_PATH(Permutohedral_INCLUDE_DIR modified_permutohedral.hpp)
+INCLUDE_DIRECTORIES(${Permutohedral_INCLUDE_DIR})
+
+IF(MSVC_IDE)
+  FIND_LIBRARY(Permutohedral_LIBRARY_DEBUG Permutohedral)
+  FIND_LIBRARY(Permutohedral_LIBRARY_RELEASE Permutohedral)
+  SET(Permutohedral_LIBRARY debug ${Permutohedral_LIBRARY_DEBUG} optimized ${Permutohedral_LIBRARY_RELEASE})
+ELSE()
+  FIND_LIBRARY(Permutohedral_LIBRARY Permutohedral)
+ENDIF()
