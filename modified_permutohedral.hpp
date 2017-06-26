@@ -1,5 +1,5 @@
-#ifndef CAFFE_MODIFIED_PERMUTOHEDRAL_HPP_
-#define CAFFE_MODIFIED_PERMUTOHEDRAL_HPP_
+#ifndef PERMUTOHEDRAL_MODIFIED_PERMUTOHEDRAL_HPP_
+#define PERMUTOHEDRAL_MODIFIED_PERMUTOHEDRAL_HPP_
 
 #include <cstdlib>
 #include <vector>
@@ -7,15 +7,13 @@
 #include <cassert>
 #include <cstdio>
 #include <cmath>
-#include "caffe/common.hpp"
-#include "caffe/util/device_alternate.hpp"
-#include "caffe/util/hash_table.hpp"
+#include "hash_table.hpp"
 
 /************************************************/
 /***          ModifiedPermutohedral Lattice   ***/
 /************************************************/
 
-namespace caffe {
+namespace Permutohedral {
 
 typedef struct MatrixEntry {
   int index;
@@ -71,50 +69,44 @@ public:
   #endif
   }
 
-  void init (const float* features, int num_dimensions, int w, int h){
-    switch (Caffe::mode()) {
-      case Caffe::CPU:
-        init_cpu(features, num_dimensions, w*h);
-        break;
-      #ifndef CPU_ONLY
-      case Caffe::GPU:
-        init_gpu(features, num_dimensions, w, h);
-        is_init = true;
-        break;
-      #endif
-      default:
-        LOG(FATAL) << "Unknown caffe mode.";
-    }
-  }
-  void compute(float* out, const float* in, int value_size, bool reverse = false, bool add = false) const{
-    switch (Caffe::mode()) {
-      case Caffe::CPU:
-        compute_cpu(out, in, value_size, reverse, add);
-        break;
-      #ifndef CPU_ONLY
-      case Caffe::GPU:
-        compute_gpu(out, in, value_size, reverse, add);
-        break;
-      #endif
-      default:
-        LOG(FATAL) << "Unknown caffe mode.";
-    }
-  }
-  void compute(double* out, const double* in, int value_size, bool reverse = false, bool add = false) const{
-    switch (Caffe::mode()) {
-      case Caffe::CPU:
-        compute_cpu(out, in, value_size, reverse, add);
-        break;
-      #ifndef CPU_ONLY
-      case Caffe::GPU:
-        compute_gpu(out, in, value_size, reverse, add);
-        break;
-      #endif
-      default:
-        LOG(FATAL) << "Unknown caffe mode.";
+  void init (const float* features, int num_dimensions, int w, int h, bool useGPU = false){
+    if (!useGPU) {
+      init_cpu(features, num_dimensions, w*h);
+    }else{
+#ifndef CPU_ONLY
+      init_gpu(features, num_dimensions, w, h);
+      is_init = true;
+#else
+      throw std::runtime_error("Compiled without CUDA support!");
+#endif
     }
   }
 
+  void compute(float* out, const float* in, int value_size, bool reverse = false, 
+                bool add = false, bool useGPU = false) const{
+    if (!useGPU) {
+      compute_cpu(out, in, value_size, reverse, add);
+    }else{
+#ifndef CPU_ONLY
+      compute_gpu(out, in, value_size, reverse, add);
+#else
+      throw std::runtime_error("Compiled without CUDA support!");
+#endif
+    }
+
+  }
+  void compute(double* out, const double* in, int value_size, bool reverse = false, 
+                bool add = false, bool useGPU = false) const{
+    if (!useGPU) {
+      compute_cpu(out, in, value_size, reverse, add);
+    }else{
+#ifndef CPU_ONLY
+      compute_gpu(out, in, value_size, reverse, add);
+#else
+      throw std::runtime_error("Compiled without CUDA support!");
+#endif
+    }
+  }
 };
-}//namespace caffe
-#endif //CAFFE_MODIFIED_PERMUTOHEDRAL_HPP_
+}//namespace Permutohedral
+#endif //PERMUTOHEDRAL_MODIFIED_PERMUTOHEDRAL_HPP_

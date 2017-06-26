@@ -17,6 +17,8 @@ if(CUDA_FOUND)
   include_directories(${CUDA_INCLUDE_DIRS})
   set(WITH_CUDA TRUE)
   add_definitions(-DWITH_CUDA)
+else(CUDA_FOUND)
+  add_definitions(-DCPU_ONLY)
 endif()
 
 #Add sources.

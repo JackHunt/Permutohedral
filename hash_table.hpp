@@ -1,10 +1,7 @@
-#ifndef CAFFE_HASH_TABLE_HPP
-#define CAFFE_HASH_TABLE_HPP
+#ifndef PERMUTOHEDRAL_HASH_TABLE_HPP
+#define PERMUTOHEDRAL_HASH_TABLE_HPP
 
-#include "caffe/common.hpp"
-
-//TODO : Might be better to unify this with already existing HashTable class
-namespace caffe{
+namespace Permutohedral {
 
 class HashTable
 {
