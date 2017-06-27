@@ -13,11 +13,11 @@ endif(MSVC_IDE)
 
 #Try to find CUDA.
 find_package(CUDA)
-if(CUDA_FOUND)
+if(WITH_CUDA)
   include_directories(${CUDA_INCLUDE_DIRS})
   set(WITH_CUDA TRUE)
   add_definitions(-DWITH_CUDA)
-else(CUDA_FOUND)
+else()
   add_definitions(-DCPU_ONLY)
 endif()
 
