@@ -6,6 +6,7 @@ project(PermutohedralLattice)
 if(MSVC_IDE)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
   add_definitions(-DUSING_CMAKE=1)
+  add_definitions(-DCMAKE_GENERATOR_PLATFORM=x64)
 else(MSVC_IDE)
   set(CMAKE_CXX_FLAGS_DEBUG "-Wall -std=c++11 -fPIC -g -march=native")
   set(CMAKE_CXX_FLAGS_RELEASE "-std=c++11 -fPIC -O3 -march=native")
@@ -40,7 +41,7 @@ set(CUDA_SOURCES
   hash_helper.cu
 )
 
-#Add source groups for VS2015.
+#Add source groups for VS.
 source_group(CPU FILES ${CPU_HEADERS} ${CPU_SOURCES})
 source_group(CUDA FILES ${CUDA_HEADERS} ${CUDA_SOURCES})
 
